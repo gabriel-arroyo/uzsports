@@ -1,0 +1,31 @@
+{
+  "name": "react-vite-template",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext js --ext jsx",
+    "format": "prettier --write .",
+    "test-all": "npm run format && npm run check-format && npm run check-lint && npm run build"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "eslint": "^8.19.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.30.1",
+    "husky": "^8.0.0",
+    "prettier": "^2.7.1",
+    "vite": "^2.9.9"
+  }
+}
