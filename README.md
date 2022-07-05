@@ -1,4 +1,4 @@
-# React Vite Template
+# Innvie Hotel
 
 This is a Reac application using Vite
 
