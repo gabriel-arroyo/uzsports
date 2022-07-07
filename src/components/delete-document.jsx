@@ -14,7 +14,7 @@ const DeleteDocument = () => {
       >
         Delete Docuent
       </button>
-      {delation.isError && <p>{delation.error.message}</p>}
+      {deletion.isError && <p>{deletion.error.message}</p>}
     </>
   );
 };
