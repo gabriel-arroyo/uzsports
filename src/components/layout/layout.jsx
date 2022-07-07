@@ -1,19 +1,21 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { Link, Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <>
       <div>
         <h1>Navbar</h1>
+        <nav>
+          <Link to="/">Home</Link>| <Link to="account/register">Register</Link>|{" "}
+          <Link to="account/login">Login</Link>
+        </nav>
       </div>
-      <main>{children}</main>
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 };
 
 export default Layout;
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
