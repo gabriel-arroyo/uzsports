@@ -1,24 +1,20 @@
 import React from "react";
-import { collection, doc } from "firebase/firestore";
-import { useFirestoreDocumentDeletion } from "@react-query-firebase/firestore";
-import { db } from "../../firebase-config";
+import { Collection } from "../../database/collections";
 
 const DeleteDocument = () => {
-  const coll = collection(db, "Players");
-  const ref = doc(coll, "J8C4tUZL8ZX5rB17WuqQ");
-  const mutation = useFirestoreDocumentDeletion(ref);
+  const players = new Collection("Players");
+  const deletion = players.deleteMutation("02mZXDqEp5bop4yvu1cJ");
 
   return (
     <>
       <button
-        disabled={mutation.isLoading}
         onClick={() => {
-          mutation.mutate();
+          deletion.mutate();
         }}
       >
-        Set Docuent
+        Delete Docuent
       </button>
-      {mutation.isError && <p>{mutation.error.message}</p>}
+      {delation.isError && <p>{delation.error.message}</p>}
     </>
   );
 };

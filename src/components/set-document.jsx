@@ -1,7 +1,7 @@
 import React from "react";
 import { collection, doc } from "firebase/firestore";
 import { useFirestoreDocumentMutation } from "@react-query-firebase/firestore";
-import { db } from "../../firebase-config";
+import { db } from "../../database/firebase-config";
 
 const SetDocument = () => {
   const coll = collection(db, "Players");

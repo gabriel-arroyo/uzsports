@@ -6,12 +6,14 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import AddDocument from "./components/addDocument";
 import SetDocument from "./components/set-document";
 import DeleteDocument from "./components/delete-document";
+import TestQuery from "./components/testquery";
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <TestQuery />
       <AddDocument />
       <SetDocument />
       <DeleteDocument />
