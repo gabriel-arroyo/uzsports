@@ -1,15 +1,26 @@
 import React from "react";
 import { Collection } from "../../database/collections";
+import { limit, where } from "firebase/firestore";
 
 const TestQuery = () => {
   const players = new Collection("Players");
-  const product = players.document("02mZXDqEp5bop4yvu1cJ");
+  const query = players.query(limit(10), where("name", "!=", "active"));
+  const news = new Collection("News");
+  const newsquery = news.query();
 
-  if (product.isLoading) {
-    return <div>Loadding gabo</div>;
+  if (query.isLoading | newsquery.isLoading) {
+    return <div>Loading...</div>;
   }
-  const snapshot = product.data;
-  return <div>{snapshot?.data()?.name}</div>;
+  return (
+    <>
+      {query.data?.map((document) => (
+        <div key={document.id}>{document.name}</div>
+      ))}
+      {newsquery.data?.map((newsdocument) => (
+        <div key={newsdocument.id}>{newsdocument.content}</div>
+      ))}
+    </>
+  );
 };
 
 export default TestQuery;

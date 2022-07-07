@@ -1,7 +1,7 @@
 import { collection, doc, query as fbQuery } from "firebase/firestore";
 import { db } from "./firebase-config";
 import {
-  useFirestoreQuery,
+  useFirestoreQueryData,
   useFirestoreDocument,
   useFirestoreCollectionMutation,
   useFirestoreDocumentDeletion,
@@ -39,10 +39,11 @@ export class Collection {
    * @return {UseQueryResult<QuerySnapshot<DocumentData>, FirestoreError>}
    */
   query(...queryConstraints) {
-    return useFirestoreQuery(
+    return useFirestoreQueryData(
       [this.name],
       firestoreQuery(this.name, ...queryConstraints),
       {
+        idField: "id",
         subscribe: true,
       },
       {
