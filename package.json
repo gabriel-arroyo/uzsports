@@ -13,6 +13,10 @@
     "test-all": "npm run format && npm run check-format && npm run check-lint && npm run build"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.8.7",
     "@react-query-firebase/firestore": "^1.0.0-dev.6",
     "firebase": "^9.8.4",
     "react": "^18.0.0",
