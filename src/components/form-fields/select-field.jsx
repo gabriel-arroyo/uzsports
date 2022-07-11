@@ -35,7 +35,7 @@ SelectField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   register: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object,
   watch: PropTypes.func.isRequired,
   required: PropTypes.bool,
   options: PropTypes.array.isRequired,

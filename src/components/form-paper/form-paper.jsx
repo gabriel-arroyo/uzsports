@@ -32,7 +32,7 @@ const FormPaper = (props) => {
           justifyContent: "center",
           alignItems: "center",
           "& .MuiTextField-root": { m: 1 },
-          "& .MuiButton-root": {
+          "& .MuiButton-root[type=submit]": {
             maxWidth: "250px",
             mt: 3,
           },

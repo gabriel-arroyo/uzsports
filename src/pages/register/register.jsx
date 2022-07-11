@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
 import SelectField from "../../components/form-fields/select-field";
+import FileField from "../../components/form-fields/file-field";
 
 const RegisterPlayer = () => {
   const {
@@ -79,6 +80,29 @@ const RegisterPlayer = () => {
             options={teams}
             default={"ND"}
           />
+        </div>
+        <div>
+          <FileField
+            name={"photoUrl"}
+            label={"Foto"}
+            watch={watch}
+            register={register}
+            errors={errors}
+          />
+          {/* <Button variant="contained" component="label">
+            Foto
+            <input
+              type="file"
+              accept="image/*"
+              {...register("photoUrl")}
+              hidden
+            />
+          </Button> */}
+        </div>
+        <div>
+          {/* <Typography mt={1} variant="body1">
+            {watchPhoto[0].name}
+          </Typography> */}
         </div>
         <div>
           <Field
