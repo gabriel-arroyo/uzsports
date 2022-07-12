@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
 import SelectField from "../../components/form-fields/select-field";
 import FileField from "../../components/form-fields/file-field";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import TextField from "@mui/material/TextField";
 
 const RegisterPlayer = () => {
   const {
@@ -40,6 +42,11 @@ const RegisterPlayer = () => {
     { value: 5, label: "5" },
   ];
   const teams = ["team 1", "team 2", "team3"];
+  const [value, setValue] = React.useState(new Date("2014-08-18T21:11:54"));
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
   return (
     <>
       <FormPaper title={"Registro"} handleSubmit={handleSubmit(onSubmit)}>
@@ -79,6 +86,16 @@ const RegisterPlayer = () => {
             required={true}
             options={teams}
             default={"ND"}
+          />
+        </div>
+        <div>
+          <DesktopDatePicker
+            sx={{ m: 10, "& .MuiFormControl-root": { m: 10, color: "red" } }}
+            label="Date desktop"
+            inputFormat="dd/MM/yyyy"
+            value={value}
+            onChange={handleChange}
+            renderInput={(params) => <TextField {...params} />}
           />
         </div>
         <div>

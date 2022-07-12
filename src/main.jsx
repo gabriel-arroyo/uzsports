@@ -15,33 +15,37 @@ import { HashRouter } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline ";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "@mui/material/styles";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline enableColorScheme />
-      <QueryClientProvider client={queryClient}>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Account />} />
-            <Route path="*" element={<></>} />
-          </Routes>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="account" element={<AccountLayout />}>
-                <Route index element={<Account />} />
-                <Route path="register/*" element={<RegisterPlayer />} />
-                <Route path="login" element={<Login />} />
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <CssBaseline enableColorScheme />
+        <QueryClientProvider client={queryClient}>
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<Account />} />
+              <Route path="*" element={<></>} />
+            </Routes>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="account" element={<AccountLayout />}>
+                  <Route index element={<Account />} />
+                  <Route path="register/*" element={<RegisterPlayer />} />
+                  <Route path="login" element={<Login />} />
+                </Route>
               </Route>
-            </Route>
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </HashRouter>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </HashRouter>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
