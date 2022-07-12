@@ -38,15 +38,10 @@ const FormPaper = (props) => {
             maxWidth: "250px",
             mt: 3,
           },
-          "& div": {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          },
         }}
         noValidate
         autoComplete="off"
-        onSubmit={props.handleSubmit}
+        onSubmit={props.form.handleSubmit(props.handleSubmit)}
       >
         <FormContext.Provider value={props.form}>
           {props.children}

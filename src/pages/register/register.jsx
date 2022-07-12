@@ -42,11 +42,7 @@ const RegisterPlayer = () => {
 
   return (
     <>
-      <FormPaper
-        title={"Registro"}
-        handleSubmit={form.handleSubmit(onSubmit)}
-        form={form}
-      >
+      <FormPaper title={"Registro"} handleSubmit={onSubmit} form={form}>
         <FormRow>
           <Field name={"firstName"} label={"Nombre"} required={true} />
           <Field name={"lastName"} label={"Apellido"} />
@@ -68,7 +64,7 @@ const RegisterPlayer = () => {
             default={"ND"}
           />
         </FormRow>
-        <FormRow>
+        <FormRow center={true}>
           <FileField name={"photoUrl"} label={"Foto"} />
         </FormRow>
         <FormRow>

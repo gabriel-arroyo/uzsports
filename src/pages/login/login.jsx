@@ -5,13 +5,11 @@ import FormPaper from "../../components/form-paper/form-paper";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
+import FormFooter from "../../components/form-fields/form-footer";
+import FormRow from "../../components/form-fields/form-row";
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const form = useForm({
     defaultValues: {
       username: "",
       password: "",
@@ -19,33 +17,27 @@ const Login = () => {
   });
   const onSubmit = (data) => console.log(data);
   return (
-    <FormPaper title={"Login"} handleSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <Field
-          name={"username"}
-          label={"Usuario"}
-          register={register}
-          errors={errors}
-          required={true}
-        />
-      </div>
-      <div>
+    <FormPaper title={"Login"} handleSubmit={onSubmit} form={form}>
+      <FormRow center={true}>
+        <Field name={"username"} label={"Usuario"} required={true} />
+      </FormRow>
+      <FormRow center={true}>
         <Field
           name={"password"}
           label={"Contraseña"}
-          register={register}
           type="password"
-          errors={errors}
           required={true}
         />
-      </div>
-      <Button type="submit" variant="contained">
-        Login
-      </Button>
-      <Typography mt={1} variant="body1">
-        ¿No tienes cuenta?
-        <Link to={"/account/register"}> Regístrate</Link>
-      </Typography>
+      </FormRow>
+      <FormFooter>
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
+        <Typography mt={1} variant="body1">
+          ¿No tienes cuenta?
+          <Link to={"/account/register"}> Regístrate</Link>
+        </Typography>
+      </FormFooter>
     </FormPaper>
   );
 };

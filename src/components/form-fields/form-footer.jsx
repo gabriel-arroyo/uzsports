@@ -9,6 +9,7 @@ const FormFooter = (props) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
       }}
     >
       {props.children}
