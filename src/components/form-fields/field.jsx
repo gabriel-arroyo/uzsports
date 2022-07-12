@@ -3,6 +3,11 @@ import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 
 const Field = (props) => {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = props.form;
   const password = useRef({});
   const label = props.label ?? props.name;
   const isEmail = props.type === "email" || props.name === "email";
@@ -10,7 +15,7 @@ const Field = (props) => {
   const isPassword = props.type === "password" || props.name === "password";
   const isPasswordConfirm =
     props.type === "passwordConfirm" || props.name === "passwordConfirm";
-  password.current = isPasswordConfirm ? props.watch("password", "") : "";
+  password.current = isPasswordConfirm ? watch("password", "") : "";
   const validatePassword = isPasswordConfirm
     ? {
         validate: (value) =>
@@ -25,25 +30,23 @@ const Field = (props) => {
     : {};
 
   const pattern = isEmail ? emailPattern : isPhone ? phonePattern : null;
-  console.log(props.errors);
   return (
     <TextField
       type={
         !(isPassword || isPasswordConfirm) ? props.type ?? "text" : "password"
       }
-      error={props.errors && props.errors[props.name] ? true : false}
+      error={errors && errors[props.name] ? true : false}
       label={label}
       helperText={
-        props.errors && !props.errors[props.name]
+        errors && !errors[props.name]
           ? ""
           : isEmail || isPhone
           ? "Dato inválido"
           : isPassword
-          ? props.errors[props.name]?.message ??
-            "Favor de ingresar un valor válido"
+          ? errors[props.name]?.message ?? "Favor de ingresar un valor válido"
           : "Favor de llenar este campo"
       }
-      {...props.register(props.name, {
+      {...register(props.name, {
         required: props.required,
         pattern: pattern,
         ...length,
@@ -58,9 +61,7 @@ export default Field;
 Field.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  register: PropTypes.func.isRequired,
-  errors: PropTypes.object,
-  watch: PropTypes.func,
+  form: PropTypes.object.isRequired,
   required: PropTypes.bool,
   type: PropTypes.string,
 };

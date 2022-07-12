@@ -4,6 +4,11 @@ import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 const FileField = (props) => {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = props.form;
   const label = props.label ?? props.name;
   return (
     <>
@@ -15,15 +20,15 @@ const FileField = (props) => {
           <input
             type="file"
             accept="image/*"
-            {...props.register(props.name, { required: props.required })}
+            {...register(props.name, { required: props.required })}
             hidden
           />
         </Button>
         <Typography mt={1} variant="body1">
-          {props.watch(props.name, "")[0]?.name}
+          {watch(props.name, "")[0]?.name}
         </Typography>
         <Typography variant="body1" color={"#D00"} fontSize="0.8rem">
-          {props.errors && !props.errors[props.name]
+          {errors && !errors[props.name]
             ? ""
             : "Favor de seleccionar un archivo"}
         </Typography>
@@ -37,8 +42,6 @@ export default FileField;
 FileField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  register: PropTypes.func.isRequired,
-  errors: PropTypes.object,
+  form: PropTypes.object.isRequired,
   required: PropTypes.bool,
-  watch: PropTypes.func.isRequired,
 };

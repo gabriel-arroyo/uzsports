@@ -10,12 +10,7 @@ import FileField from "../../components/form-fields/file-field";
 import DateField from "../../components/form-fields/date-field";
 
 const RegisterPlayer = () => {
-  const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const form = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -45,28 +40,27 @@ const RegisterPlayer = () => {
 
   return (
     <>
-      <FormPaper title={"Registro"} handleSubmit={handleSubmit(onSubmit)}>
+      <FormPaper title={"Registro"} handleSubmit={form.handleSubmit(onSubmit)}>
         <div>
           <Field
             name={"firstName"}
             label={"Nombre"}
-            register={register}
-            errors={errors}
+            form={form}
             required={true}
           />
-          <Field
-            name={"lastName"}
-            label={"Apellido"}
-            register={register}
-            errors={errors}
+          <Field name={"lastName"} label={"Apellido"} form={form} />
+          <DateField
+            name={"birthday"}
+            label={"Fecha de nacimiento"}
+            form={form}
           />
-
+        </div>
+        <div>
+          <Field name={"number"} label={"Numero"} form={form} type={"number"} />
           <SelectField
             name={"position"}
             label={"Posición"}
-            watch={watch}
-            register={register}
-            errors={errors}
+            form={form}
             options={positions}
             default={0}
           />
@@ -74,81 +68,40 @@ const RegisterPlayer = () => {
           <SelectField
             name={"team"}
             label={"Equipo"}
-            watch={watch}
-            register={register}
-            errors={errors}
+            form={form}
             options={teams}
             default={"ND"}
           />
         </div>
         <div>
-          <DateField
-            name={"birthday"}
-            label={"Fecha de nacimiento"}
-            register={register}
-            errors={errors}
-          />
+          <FileField name={"photoUrl"} label={"Foto"} form={form} />
         </div>
         <div>
-          <FileField
-            name={"photoUrl"}
-            label={"Foto"}
-            watch={watch}
-            register={register}
-            errors={errors}
-          />
-        </div>
-        <div>
-          <Field
-            name={"address"}
-            label={"Dirección"}
-            register={register}
-            errors={errors}
-          />
-          <Field
-            name={"city"}
-            label={"Ciudad"}
-            register={register}
-            errors={errors}
-          />
+          <Field name={"address"} label={"Dirección"} form={form} />
+          <Field name={"city"} label={"Ciudad"} form={form} />
         </div>
         <div>
           <Field
             name={"email"}
             type={"email"}
             label={"Correo electrónico"}
-            register={register}
-            errors={errors}
+            form={form}
           />
-          <Field
-            name={"phone"}
-            type={"phone"}
-            label={"Teléfono"}
-            register={register}
-            errors={errors}
-          />
-          <Field
-            name={"social"}
-            label={"Facebook"}
-            register={register}
-            errors={errors}
-          />
+          <Field name={"phone"} type={"phone"} label={"Teléfono"} form={form} />
+          <Field name={"social"} label={"Facebook"} form={form} />
         </div>
         <div>
           <Field
             name={"password"}
             label={"Contraseña"}
-            register={register}
+            form={form}
             type="password"
-            errors={errors}
           />
           <Field
             name={"passwordConfirm"}
             label={"Confirma tu ontraseña"}
-            register={register}
+            form={form}
             type="password"
-            errors={errors}
-            watch={watch}
           />
         </div>
         <Button type="submit" variant="contained">

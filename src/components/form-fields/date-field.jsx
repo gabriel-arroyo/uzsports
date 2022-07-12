@@ -4,17 +4,20 @@ import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 
 const DateField = (props) => {
+  const {
+    register,
+    formState: { errors },
+  } = props.form;
   const [value, setValue] = React.useState("");
 
   const handleChange = (newValue) => {
-    console.log(newValue);
     setValue(newValue);
   };
   const label = props.label ?? props.name;
   return (
     <DesktopDatePicker
       label={label}
-      error={props.errors && props.errors[props.name] ? true : false}
+      error={errors && errors[props.name] ? true : false}
       inputFormat="dd/MM/yyyy"
       value={value}
       onChange={handleChange}
@@ -22,11 +25,11 @@ const DateField = (props) => {
         <TextField
           {...params}
           helperText={
-            props.errors && !props.errors[props.name]
+            errors && !errors[props.name]
               ? ""
               : "Favor de seleccionar una fecha"
           }
-          {...props.register(props.name, { required: props.required })}
+          {...register(props.name, { required: props.required })}
         />
       )}
     />
@@ -38,7 +41,6 @@ export default DateField;
 DateField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  register: PropTypes.func.isRequired,
-  errors: PropTypes.object,
+  form: PropTypes.object.isRequired,
   required: PropTypes.bool,
 };
