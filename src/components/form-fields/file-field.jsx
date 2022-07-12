@@ -22,6 +22,11 @@ const FileField = (props) => {
         <Typography mt={1} variant="body1">
           {props.watch(props.name, "")[0]?.name}
         </Typography>
+        <Typography variant="body1" color={"#D00"} fontSize="0.8rem">
+          {props.errors && !props.errors[props.name]
+            ? ""
+            : "Favor de seleccionar un archivo"}
+        </Typography>
       </div>
     </>
   );

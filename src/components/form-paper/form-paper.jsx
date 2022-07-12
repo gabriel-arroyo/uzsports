@@ -31,14 +31,13 @@ const FormPaper = (props) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          "& .MuiTextField-root": { m: 1 },
+          "& .MuiTextField-root": { m: 1, color: "#D00" },
           "& .MuiButton-root[type=submit]": {
             maxWidth: "250px",
             mt: 3,
           },
           "& div": {
             display: "flex",
-            flexWrap: "wrap",
             justifyContent: "center",
             alignItems: "center",
           },

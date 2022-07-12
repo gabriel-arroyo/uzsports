@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
 import SelectField from "../../components/form-fields/select-field";
 import FileField from "../../components/form-fields/file-field";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import TextField from "@mui/material/TextField";
+import DateField from "../../components/form-fields/date-field";
 
 const RegisterPlayer = () => {
   const {
@@ -27,10 +26,11 @@ const RegisterPlayer = () => {
       city: "",
       photoUrl: "",
       birthday: "",
-      mail: "",
+      email: "",
       phone: "",
       social: "",
       password: "",
+      passwordConfirm: "",
     },
   });
   const onSubmit = (data) => console.log(data);
@@ -42,11 +42,7 @@ const RegisterPlayer = () => {
     { value: 5, label: "5" },
   ];
   const teams = ["team 1", "team 2", "team3"];
-  const [value, setValue] = React.useState(new Date("2014-08-18T21:11:54"));
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
   return (
     <>
       <FormPaper title={"Registro"} handleSubmit={handleSubmit(onSubmit)}>
@@ -63,7 +59,6 @@ const RegisterPlayer = () => {
             label={"Apellido"}
             register={register}
             errors={errors}
-            required={true}
           />
 
           <SelectField
@@ -72,7 +67,6 @@ const RegisterPlayer = () => {
             watch={watch}
             register={register}
             errors={errors}
-            required={true}
             options={positions}
             default={0}
           />
@@ -83,19 +77,16 @@ const RegisterPlayer = () => {
             watch={watch}
             register={register}
             errors={errors}
-            required={true}
             options={teams}
             default={"ND"}
           />
         </div>
         <div>
-          <DesktopDatePicker
-            sx={{ m: 10, "& .MuiFormControl-root": { m: 10, color: "red" } }}
-            label="Date desktop"
-            inputFormat="dd/MM/yyyy"
-            value={value}
-            onChange={handleChange}
-            renderInput={(params) => <TextField {...params} />}
+          <DateField
+            name={"birthday"}
+            label={"Fecha de nacimiento"}
+            register={register}
+            errors={errors}
           />
         </div>
         <div>
@@ -106,20 +97,42 @@ const RegisterPlayer = () => {
             register={register}
             errors={errors}
           />
-          {/* <Button variant="contained" component="label">
-            Foto
-            <input
-              type="file"
-              accept="image/*"
-              {...register("photoUrl")}
-              hidden
-            />
-          </Button> */}
         </div>
         <div>
-          {/* <Typography mt={1} variant="body1">
-            {watchPhoto[0].name}
-          </Typography> */}
+          <Field
+            name={"address"}
+            label={"Dirección"}
+            register={register}
+            errors={errors}
+          />
+          <Field
+            name={"city"}
+            label={"Ciudad"}
+            register={register}
+            errors={errors}
+          />
+        </div>
+        <div>
+          <Field
+            name={"email"}
+            type={"email"}
+            label={"Correo electrónico"}
+            register={register}
+            errors={errors}
+          />
+          <Field
+            name={"phone"}
+            type={"phone"}
+            label={"Teléfono"}
+            register={register}
+            errors={errors}
+          />
+          <Field
+            name={"social"}
+            label={"Facebook"}
+            register={register}
+            errors={errors}
+          />
         </div>
         <div>
           <Field
@@ -128,7 +141,14 @@ const RegisterPlayer = () => {
             register={register}
             type="password"
             errors={errors}
-            required={true}
+          />
+          <Field
+            name={"passwordConfirm"}
+            label={"Confirma tu ontraseña"}
+            register={register}
+            type="password"
+            errors={errors}
+            watch={watch}
           />
         </div>
         <Button type="submit" variant="contained">
