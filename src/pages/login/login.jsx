@@ -7,15 +7,21 @@ import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
+import { Collection } from "../../../database/collections";
 
 const Login = () => {
+  const login = new Collection("Login");
   const form = useForm({
     defaultValues: {
       username: "",
       password: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    login.insert(data);
+  };
+  console.log(login.mutation.isError);
   return (
     <FormPaper title={"Login"} handleSubmit={onSubmit} form={form}>
       <FormRow center={true}>

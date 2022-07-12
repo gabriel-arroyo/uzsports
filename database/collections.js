@@ -20,6 +20,7 @@ export class Collection {
   constructor(name) {
     this.name = name;
     this.collection = collection(db, name);
+    this.mutation = this.mutater();
   }
 
   /**
@@ -36,6 +37,7 @@ export class Collection {
 
   /**
    * Firebase Query
+   * @param {Array} queryConstraints e.g. { limit(10), where("state", "==", "active" )}
    * @return {UseQueryResult<QuerySnapshot<DocumentData>, FirestoreError>}
    */
   query(...queryConstraints) {
@@ -58,9 +60,9 @@ export class Collection {
    * Add document
    * @param {Object} newDocument object with properties
    */
-  add(newDocument) {
-    addDocument(this.collection, newDocument);
+  insert(newDocument) {
     console.log("mutate");
+    this.mutation.mutate(newDocument);
   }
 
   /**
@@ -68,7 +70,7 @@ export class Collection {
    * @param {bool} merge if the document is replaced or not
    * @return {UseMutationResult<DocumentReference<DocumentData>, FirestoreError, WithFieldValue<DocumentData>, unknown>}
    */
-  mutation(merge = true) {
+  mutater(merge = true) {
     return useFirestoreCollectionMutation(this.collection, { merge: merge });
   }
 

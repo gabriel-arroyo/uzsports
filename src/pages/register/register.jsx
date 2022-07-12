@@ -10,8 +10,10 @@ import FileField from "../../components/form-fields/file-field";
 import DateField from "../../components/form-fields/date-field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
+import { Collection } from "../../../database/collections";
 
 const RegisterPlayer = () => {
+  const register = new Collection("Players");
   const form = useForm({
     defaultValues: {
       firstName: "",
@@ -30,7 +32,10 @@ const RegisterPlayer = () => {
       passwordConfirm: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    register.insert(data);
+  };
   const positions = [
     { value: 1, label: "1" },
     { value: 2, label: "2" },
