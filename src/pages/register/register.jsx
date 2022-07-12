@@ -8,6 +8,8 @@ import Field from "../../components/form-fields/field";
 import SelectField from "../../components/form-fields/select-field";
 import FileField from "../../components/form-fields/file-field";
 import DateField from "../../components/form-fields/date-field";
+import FormFooter from "../../components/form-fields/form-footer";
+import FormRow from "../../components/form-fields/form-row";
 
 const RegisterPlayer = () => {
   const form = useForm({
@@ -41,7 +43,7 @@ const RegisterPlayer = () => {
   return (
     <>
       <FormPaper title={"Registro"} handleSubmit={form.handleSubmit(onSubmit)}>
-        <div>
+        <FormRow>
           <Field
             name={"firstName"}
             label={"Nombre"}
@@ -54,8 +56,8 @@ const RegisterPlayer = () => {
             label={"Fecha de nacimiento"}
             form={form}
           />
-        </div>
-        <div>
+        </FormRow>
+        <FormRow>
           <Field name={"number"} label={"Numero"} form={form} type={"number"} />
           <SelectField
             name={"position"}
@@ -72,15 +74,15 @@ const RegisterPlayer = () => {
             options={teams}
             default={"ND"}
           />
-        </div>
-        <div>
+        </FormRow>
+        <FormRow>
           <FileField name={"photoUrl"} label={"Foto"} form={form} />
-        </div>
-        <div>
+        </FormRow>
+        <FormRow>
           <Field name={"address"} label={"Dirección"} form={form} />
           <Field name={"city"} label={"Ciudad"} form={form} />
-        </div>
-        <div>
+        </FormRow>
+        <FormRow>
           <Field
             name={"email"}
             type={"email"}
@@ -89,8 +91,8 @@ const RegisterPlayer = () => {
           />
           <Field name={"phone"} type={"phone"} label={"Teléfono"} form={form} />
           <Field name={"social"} label={"Facebook"} form={form} />
-        </div>
-        <div>
+        </FormRow>
+        <FormRow>
           <Field
             name={"password"}
             label={"Contraseña"}
@@ -103,14 +105,16 @@ const RegisterPlayer = () => {
             form={form}
             type="password"
           />
-        </div>
-        <Button type="submit" variant="contained">
-          Registrar
-        </Button>
-        <Typography mt={1} variant="body1">
-          ¿Ya te haz registrado?
-          <Link to={"/account/login"}> Ingresa con tu cuenta</Link>
-        </Typography>
+        </FormRow>
+        <FormFooter>
+          <Button type="submit" variant="contained">
+            Registrar
+          </Button>
+          <Typography mt={1} variant="body1">
+            ¿Ya te haz registrado?
+            <Link to={"/account/login"}> Ingresa con tu cuenta</Link>
+          </Typography>
+        </FormFooter>
       </FormPaper>
     </>
   );
