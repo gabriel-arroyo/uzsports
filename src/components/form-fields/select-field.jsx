@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 import MenuItem from "@mui/material/MenuItem";
+import { FormContext } from "../form-paper/form-paper.jsx";
 
 const SelectField = (props) => {
+  const form = useContext(FormContext);
   const {
     register,
     watch,
     formState: { errors },
-  } = props.form;
+  } = form;
   const label = props.label ?? props.name;
   let options = props.options;
   if (!props.options[0]?.hasOwnProperty("value")) {
@@ -39,7 +41,6 @@ SelectField.propTypes = {
   children: PropTypes.any,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  form: PropTypes.object.isRequired,
   required: PropTypes.bool,
   options: PropTypes.array.isRequired,
   default: PropTypes.any.isRequired,

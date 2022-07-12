@@ -1,8 +1,10 @@
-import React from "react";
+import React, { createContext } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
+
+export const FormContext = createContext({});
 
 const FormPaper = (props) => {
   return (
@@ -46,7 +48,9 @@ const FormPaper = (props) => {
         autoComplete="off"
         onSubmit={props.handleSubmit}
       >
-        {props.children}
+        <FormContext.Provider value={props.form}>
+          {props.children}
+        </FormContext.Provider>
       </Box>
     </Paper>
   );
@@ -58,4 +62,5 @@ FormPaper.propTypes = {
   title: PropTypes.string,
   children: PropTypes.any,
   handleSubmit: PropTypes.func,
+  form: PropTypes.object.isRequired,
 };

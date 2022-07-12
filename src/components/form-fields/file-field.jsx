@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
+import { FormContext } from "../form-paper/form-paper.jsx";
 
 const FileField = (props) => {
+  const form = useContext(FormContext);
   const {
     register,
     watch,
     formState: { errors },
-  } = props.form;
+  } = form;
   const label = props.label ?? props.name;
   return (
     <>
@@ -42,6 +44,5 @@ export default FileField;
 FileField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  form: PropTypes.object.isRequired,
   required: PropTypes.bool,
 };

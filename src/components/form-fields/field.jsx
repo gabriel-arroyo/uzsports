@@ -1,13 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
+import { FormContext } from "../form-paper/form-paper.jsx";
 
 const Field = (props) => {
+  const form = useContext(FormContext);
   const {
     register,
     watch,
     formState: { errors },
-  } = props.form;
+  } = form;
   const password = useRef({});
   const label = props.label ?? props.name;
   const isEmail = props.type === "email" || props.name === "email";
@@ -61,7 +63,6 @@ export default Field;
 Field.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  form: PropTypes.object.isRequired,
   required: PropTypes.bool,
   type: PropTypes.string,
 };

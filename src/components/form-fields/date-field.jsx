@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
+import { FormContext } from "../form-paper/form-paper.jsx";
 
 const DateField = (props) => {
+  const form = useContext(FormContext);
   const {
     register,
     formState: { errors },
-  } = props.form;
+  } = form;
   const [value, setValue] = React.useState("");
 
   const handleChange = (newValue) => {
@@ -41,6 +43,5 @@ export default DateField;
 DateField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  form: PropTypes.object.isRequired,
   required: PropTypes.bool,
 };

@@ -42,27 +42,21 @@ const RegisterPlayer = () => {
 
   return (
     <>
-      <FormPaper title={"Registro"} handleSubmit={form.handleSubmit(onSubmit)}>
+      <FormPaper
+        title={"Registro"}
+        handleSubmit={form.handleSubmit(onSubmit)}
+        form={form}
+      >
         <FormRow>
-          <Field
-            name={"firstName"}
-            label={"Nombre"}
-            form={form}
-            required={true}
-          />
-          <Field name={"lastName"} label={"Apellido"} form={form} />
-          <DateField
-            name={"birthday"}
-            label={"Fecha de nacimiento"}
-            form={form}
-          />
+          <Field name={"firstName"} label={"Nombre"} required={true} />
+          <Field name={"lastName"} label={"Apellido"} />
+          <DateField name={"birthday"} label={"Fecha de nacimiento"} />
         </FormRow>
         <FormRow>
-          <Field name={"number"} label={"Numero"} form={form} type={"number"} />
+          <Field name={"number"} label={"Numero"} type={"number"} />
           <SelectField
             name={"position"}
             label={"Posición"}
-            form={form}
             options={positions}
             default={0}
           />
@@ -70,39 +64,27 @@ const RegisterPlayer = () => {
           <SelectField
             name={"team"}
             label={"Equipo"}
-            form={form}
             options={teams}
             default={"ND"}
           />
         </FormRow>
         <FormRow>
-          <FileField name={"photoUrl"} label={"Foto"} form={form} />
+          <FileField name={"photoUrl"} label={"Foto"} />
         </FormRow>
         <FormRow>
-          <Field name={"address"} label={"Dirección"} form={form} />
-          <Field name={"city"} label={"Ciudad"} form={form} />
+          <Field name={"address"} label={"Dirección"} />
+          <Field name={"city"} label={"Ciudad"} />
         </FormRow>
         <FormRow>
-          <Field
-            name={"email"}
-            type={"email"}
-            label={"Correo electrónico"}
-            form={form}
-          />
-          <Field name={"phone"} type={"phone"} label={"Teléfono"} form={form} />
-          <Field name={"social"} label={"Facebook"} form={form} />
+          <Field name={"email"} type={"email"} label={"Correo electrónico"} />
+          <Field name={"phone"} type={"phone"} label={"Teléfono"} />
+          <Field name={"social"} label={"Facebook"} />
         </FormRow>
         <FormRow>
-          <Field
-            name={"password"}
-            label={"Contraseña"}
-            form={form}
-            type="password"
-          />
+          <Field name={"password"} label={"Contraseña"} type="password" />
           <Field
             name={"passwordConfirm"}
             label={"Confirma tu ontraseña"}
-            form={form}
             type="password"
           />
         </FormRow>
