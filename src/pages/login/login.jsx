@@ -10,6 +10,8 @@ import FormRow from "../../components/form-fields/form-row";
 import { Collection } from "../../../database/collections";
 
 const Login = () => {
+  // const user = useAuthUser(["ing.gabriel.arroyo@gmail.com"], auth);
+  // console.log("user", user);
   const login = new Collection("Login");
   const form = useForm({
     defaultValues: {
@@ -22,6 +24,23 @@ const Login = () => {
     login.insert(data);
   };
   console.log(login.mutation.isError);
+
+  // if (user.isLoading) {
+  //   return <div>Loading</div>;
+  // }
+
+  // if (user.data) {
+  //   return <div>Welcome {user.data.displayName}!</div>;
+  // }
+
+  // if (user.isError) {
+  //   return <div>Error</div>;
+  // }
+
+  if (login.isError) {
+    return <div>Error</div>;
+  }
+
   return (
     <FormPaper title={"Login"} handleSubmit={onSubmit} form={form}>
       <FormRow center={true}>

@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./styles/index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-
 import CssBaseline from "@mui/material/CssBaseline ";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "@mui/material/styles";

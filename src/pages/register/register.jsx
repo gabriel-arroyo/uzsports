@@ -11,7 +11,8 @@ import DateField from "../../components/form-fields/date-field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
 import { Collection } from "../../../database/collections";
-
+import { auth } from "../../../database/firebase-config";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
 const RegisterPlayer = () => {
   const register = new Collection("Players");
   const form = useForm({
@@ -34,7 +35,12 @@ const RegisterPlayer = () => {
   });
   const onSubmit = (data) => {
     console.log(data);
-    register.insert(data);
+    createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then((d) => {
+        console.log("logged", d);
+        register.insert({ ...data, uid: d.user.uid });
+      })
+      .catch((e) => console.log("error", e));
   };
   const positions = [
     { value: 1, label: "1" },
