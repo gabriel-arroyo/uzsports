@@ -11,11 +11,18 @@ const FileField = (props) => {
     watch,
     formState: { errors },
   } = form;
-  const label = props.label ?? props.name;
+  const requiredSign = props.required ? "*" : "";
+  const label = (props.label ?? props.name) + requiredSign;
   return (
     <>
       <div
-        style={{ display: "flex", flexDirection: "column", marginBottom: 5 }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: 5,
+          marginLeft: 10,
+          marginRight: 10,
+        }}
       >
         <Button variant="contained" component="label" sx={{ mt: 2 }}>
           {label}

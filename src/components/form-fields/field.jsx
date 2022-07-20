@@ -10,8 +10,9 @@ const Field = (props) => {
     watch,
     formState: { errors },
   } = form;
+  const requiredSign = props.required ? "*" : "";
   const password = useRef({});
-  const label = props.label ?? props.name;
+  const label = (props.label ?? props.name) + requiredSign;
   const isEmail = props.type === "email" || props.name === "email";
   const isPhone = props.type === "phone" || props.name === "phone";
   const isPassword = props.type === "password" || props.name === "password";

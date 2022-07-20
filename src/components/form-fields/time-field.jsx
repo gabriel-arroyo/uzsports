@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 import { FormContext } from "../form-paper/form-paper.jsx";
 
-const DateField = (props) => {
+const TimeField = (props) => {
   const form = useContext(FormContext);
   const {
     register,
@@ -18,19 +18,16 @@ const DateField = (props) => {
   const requiredSign = props.required ? "*" : "";
   const label = (props.label ?? props.name) + requiredSign;
   return (
-    <DesktopDatePicker
+    <TimePicker
       label={label}
       error={errors && errors[props.name] ? true : false}
-      inputFormat="dd/MM/yyyy"
       value={value}
       onChange={handleChange}
       renderInput={(params) => (
         <TextField
           {...params}
           helperText={
-            errors && !errors[props.name]
-              ? ""
-              : "Favor de seleccionar una fecha"
+            errors && !errors[props.name] ? "" : "Favor de seleccionar una hora"
           }
           {...register(props.name, { required: props.required })}
         />
@@ -39,9 +36,9 @@ const DateField = (props) => {
   );
 };
 
-export default DateField;
+export default TimeField;
 
-DateField.propTypes = {
+TimeField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   required: PropTypes.bool,

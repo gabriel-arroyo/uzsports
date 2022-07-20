@@ -1,112 +1,66 @@
 import React from "react";
-import FormPaper from "../../components/form-paper/form-paper";
-import { useForm } from "react-hook-form";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
-import Field from "../../components/form-fields/field";
-import SelectField from "../../components/form-fields/select-field";
-import FileField from "../../components/form-fields/file-field";
-import DateField from "../../components/form-fields/date-field";
-import FormFooter from "../../components/form-fields/form-footer";
-import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../../database/collections";
-import { auth } from "../../../database/firebase-config";
-import { createUserWithEmailAndPassword } from "@firebase/auth";
-const RegisterPlayer = () => {
-  const register = new Collection("Players");
-  const form = useForm({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      number: 0,
-      position: 0,
-      team: "ND",
-      address: "",
-      city: "",
-      photoUrl: "",
-      birthday: "",
-      email: "",
-      phone: "",
-      social: "",
-      password: "",
-      passwordConfirm: "",
-    },
-  });
-  const onSubmit = (data) => {
-    console.log(data);
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((d) => {
-        console.log("logged", d);
-        register.insert({ ...data, uid: d.user.uid });
-      })
-      .catch((e) => console.log("error", e));
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import RegisterPlayer from "./register-player";
+import RegisterTeam from "./register-team";
+import RegisterCoach from "./register-coach";
+import RegisterReferee from "./register-referee";
+import RegisterLeague from "./register-legue";
+import RegisterTournament from "./register-tournament";
+import RegisterUser from "./register-user";
+
+/**
+ *
+ * @param {*} props children, value, index, ...other
+ * @return {JXElement} Panel Item
+ */
+function Register() {
+  const [value, setValue] = React.useState("1");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
-  const positions = [
-    { value: 1, label: "1" },
-    { value: 2, label: "2" },
-    { value: 3, label: "3" },
-    { value: 4, label: "4" },
-    { value: 5, label: "5" },
-  ];
-  const teams = ["team 1", "team 2", "team3"];
 
   return (
-    <>
-      <FormPaper title={"Registro"} handleSubmit={onSubmit} form={form}>
-        <FormRow>
-          <Field name={"firstName"} label={"Nombre"} required={true} />
-          <Field name={"lastName"} label={"Apellido"} />
-          <DateField name={"birthday"} label={"Fecha de nacimiento"} />
-        </FormRow>
-        <FormRow>
-          <Field name={"number"} label={"Numero"} type={"number"} />
-          <SelectField
-            name={"position"}
-            label={"Posición"}
-            options={positions}
-            default={0}
-          />
-
-          <SelectField
-            name={"team"}
-            label={"Equipo"}
-            options={teams}
-            default={"ND"}
-          />
-        </FormRow>
-        <FormRow center={true}>
-          <FileField name={"photoUrl"} label={"Foto"} />
-        </FormRow>
-        <FormRow>
-          <Field name={"address"} label={"Dirección"} />
-          <Field name={"city"} label={"Ciudad"} />
-        </FormRow>
-        <FormRow>
-          <Field name={"email"} type={"email"} label={"Correo electrónico"} />
-          <Field name={"phone"} type={"phone"} label={"Teléfono"} />
-          <Field name={"social"} label={"Facebook"} />
-        </FormRow>
-        <FormRow>
-          <Field name={"password"} label={"Contraseña"} type="password" />
-          <Field
-            name={"passwordConfirm"}
-            label={"Confirma tu ontraseña"}
-            type="password"
-          />
-        </FormRow>
-        <FormFooter>
-          <Button type="submit" variant="contained">
-            Registrar
-          </Button>
-          <Typography mt={1} variant="body1">
-            ¿Ya te haz registrado?
-            <Link to={"/account/login"}> Ingresa con tu cuenta</Link>
-          </Typography>
-        </FormFooter>
-      </FormPaper>
-    </>
+    <Box sx={{ width: "100%", typography: "body1" }}>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="Jugador" value="1" />
+            <Tab label="Equipo" value="2" />
+            <Tab label="Coach" value="3" />
+            <Tab label="Referee" value="4" />
+            <Tab label="Liga" value="5" />
+            <Tab label="Torneo" value="6" />
+            <Tab label="Usuario" value="7" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">
+          <RegisterPlayer />
+        </TabPanel>
+        <TabPanel value="2">
+          <RegisterTeam />
+        </TabPanel>
+        <TabPanel value="3">
+          <RegisterCoach />
+        </TabPanel>
+        <TabPanel value="4">
+          <RegisterReferee />
+        </TabPanel>
+        <TabPanel value="5">
+          <RegisterLeague />
+        </TabPanel>
+        <TabPanel value="6">
+          <RegisterTournament />
+        </TabPanel>
+        <TabPanel value="7">
+          <RegisterUser />
+        </TabPanel>
+      </TabContext>
+    </Box>
   );
-};
-
-export default RegisterPlayer;
+}
+export default Register;

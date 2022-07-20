@@ -11,7 +11,8 @@ const SelectField = (props) => {
     watch,
     formState: { errors },
   } = form;
-  const label = props.label ?? props.name;
+  const requiredSign = props.required ? "*" : "";
+  const label = (props.label ?? props.name) + requiredSign;
   let options = props.options;
   if (!props.options[0]?.hasOwnProperty("value")) {
     options = props.options.map((o) => ({ value: o, label: o }));
@@ -25,7 +26,7 @@ const SelectField = (props) => {
       helperText={!errors[props.name] ? "" : "Favor de llenar este campo"}
       {...register(props.name, { required: props.required })}
     >
-      <MenuItem value={props.default}>Selecciona tu {label}</MenuItem>
+      <MenuItem value={props.default}>Selecciona {label}</MenuItem>
       {options.map((option) => (
         <MenuItem key={option.value} value={option.value}>
           {option.label}
