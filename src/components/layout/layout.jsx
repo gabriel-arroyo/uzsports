@@ -1,12 +1,13 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Button } from "@mui/material";
+import Navbar from "../navbar/navbar";
 
 const Layout = () => {
   return (
     <>
       <div>
-        <h1>Navbar</h1>
+        <Navbar />
         <nav>
           <Link to="/" sx={{ textDecoration: "none" }}>
             <Button variant="contained" sx={{ textDecoration: "none" }}>

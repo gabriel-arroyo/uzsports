@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import Router from "./router.jsx";
+import "./styles/index.css";
 
 const queryClient = new QueryClient();
 
