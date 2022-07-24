@@ -1,6 +1,5 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Outlet } from "react-router-dom";
 import Navbar from "../navbar/navbar";
 
 const Layout = () => {
@@ -8,15 +7,6 @@ const Layout = () => {
     <>
       <div>
         <Navbar />
-        <nav>
-          <Link to="/" sx={{ textDecoration: "none" }}>
-            <Button variant="contained" sx={{ textDecoration: "none" }}>
-              Home
-            </Button>
-          </Link>
-          | <Link to="account/register">Register</Link>|{" "}
-          <Link to="account/login">Login</Link>
-        </nav>
       </div>
       <main>
         <Outlet />
