@@ -63,8 +63,8 @@ const RegisterCoach = () => {
             Registrar
           </Button>
           <Typography mt={1} variant="body1">
-            ¿Ya te haz registrado?
-            <Link to={"/account/login"}> Ingresa con tu cuenta</Link>
+            Si no haz registrado tu usuario, por favor
+            <Link to={"/account/register"}> Regístrate</Link> primero
           </Typography>
         </FormFooter>
       </FormPaper>

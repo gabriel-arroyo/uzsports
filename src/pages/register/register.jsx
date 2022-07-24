@@ -29,35 +29,35 @@ function Register() {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Jugador" value="1" />
-            <Tab label="Equipo" value="2" />
-            <Tab label="Coach" value="3" />
-            <Tab label="Referee" value="4" />
-            <Tab label="Liga" value="5" />
-            <Tab label="Torneo" value="6" />
-            <Tab label="Usuario" value="7" />
+            <Tab label="Usuario" value="1" />
+            <Tab label="Jugador" value="2" />
+            <Tab label="Equipo" value="3" />
+            <Tab label="Coach" value="4" />
+            <Tab label="Referee" value="5" />
+            <Tab label="Liga" value="6" />
+            <Tab label="Torneo" value="7" />
           </TabList>
         </Box>
         <TabPanel value="1">
-          <RegisterPlayer />
+          <RegisterUser />
         </TabPanel>
         <TabPanel value="2">
-          <RegisterTeam />
+          <RegisterPlayer />
         </TabPanel>
         <TabPanel value="3">
-          <RegisterCoach />
+          <RegisterTeam />
         </TabPanel>
         <TabPanel value="4">
-          <RegisterReferee />
+          <RegisterCoach />
         </TabPanel>
         <TabPanel value="5">
-          <RegisterLeague />
+          <RegisterReferee />
         </TabPanel>
         <TabPanel value="6">
-          <RegisterTournament />
+          <RegisterLeague />
         </TabPanel>
         <TabPanel value="7">
-          <RegisterUser />
+          <RegisterTournament />
         </TabPanel>
       </TabContext>
     </Box>
