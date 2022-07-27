@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../../database/collections";
-import { auth } from "../../../database/firebase-config";
+import { Collection } from "../../database/collections";
+import { auth } from "../../database/firebase-config";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 
 const RegisterReferee = () => {

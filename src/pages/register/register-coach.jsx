@@ -9,8 +9,8 @@ import SelectField from "../../components/form-fields/select-field";
 import FileField from "../../components/form-fields/file-field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../../database/collections";
-import { auth } from "../../../database/firebase-config";
+import { Collection } from "../../database/collections";
+import { auth } from "../../database/firebase-config";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 
 const RegisterCoach = () => {

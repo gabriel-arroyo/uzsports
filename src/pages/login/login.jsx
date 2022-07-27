@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../../database/collections";
+import { Collection } from "../../database/collections";
 
 const Login = () => {
   // const user = useAuthUser(["ing.gabriel.arroyo@gmail.com"], auth);
