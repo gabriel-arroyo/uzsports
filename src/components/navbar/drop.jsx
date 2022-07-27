@@ -4,32 +4,22 @@ import "./drop.css";
 import "./navbar.css";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
+import { menu } from "../../database/local";
 
 const Drop = (props) => {
-  const liga = [
-    {
-      label: "Inicio",
-      submenu: [
-        { label: "Registro", link: "/account/register" },
-        { label: "Login", link: "/account/login" },
-      ],
-    },
-    {
-      label: "Nosotros",
-      submenu: [
-        { label: "s2", link: "/account/register" },
-        { label: "s2", link: "/account/login" },
-      ],
-    },
-    { label: "Servicios", link: "/services" },
-  ];
-
   return (
     <div style={{ flexGrow: 1 }} className="navmenu">
-      <p>●</p>
-      <Menu label="Liga" submenu={liga} />
-      <p>●</p>
-      <Menu label="Comunidad" link="/account/register" />
+      {menu.map((element, key) => (
+        <>
+          <Menu
+            key={key}
+            label={element.label}
+            link={element.link}
+            submenu={element.submenu}
+          />
+          {menu.length > key + 1 && <p>●</p>}
+        </>
+      ))}
     </div>
   );
 };
