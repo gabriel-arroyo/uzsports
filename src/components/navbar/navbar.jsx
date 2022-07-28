@@ -2,9 +2,9 @@ import React from "react";
 import { Menu as MenuIcon, Home as HomeIcon } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import "./navbar.css";
-import Drop from "./drop";
-
-// import Drop from "./drop";
+import Dropdown from "./dropdown";
+import { menu } from "../../database/local";
+import { Avatar } from "@mui/material";
 
 const Navbar = () => {
   return (
@@ -15,7 +15,7 @@ const Navbar = () => {
         </NavLink>
         <MenuIcon className="bars" />
         <div>
-          <Drop />
+          <Dropdown menu={menu} mainMenu />
         </div>
         <nav className="navbtn">
           <NavLink to="/account/register" className="navlink">
@@ -24,6 +24,7 @@ const Navbar = () => {
           <NavLink to="/account/login" className="navlink">
             Login
           </NavLink>
+          <Avatar sx={{ ml: 2 }} alt="user" src="https://i.pravatar.cc/300" />
         </nav>
       </nav>
     </>

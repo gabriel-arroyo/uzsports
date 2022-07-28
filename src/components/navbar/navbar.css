@@ -3,7 +3,7 @@
   height: 80px;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem calc((100vw - 1000px) / 2);
+  padding: 0.5rem calc((100vw - 1200px) / 2);
   z-index: 10;
 }
 
@@ -52,7 +52,7 @@
 .navmenu {
   display: flex;
   align-items: center;
-  margin-right: -24px;
+  justify-content: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -71,4 +71,10 @@
   .navbtn {
     display: none !important;
   }
+}
+
+.custom {
+  background-color: #8bc53d;
+  display: flex;
+  justify-content: center !important;
 }

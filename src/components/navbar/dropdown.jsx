@@ -1,32 +1,65 @@
 import { Box, Popper, Grow } from "@mui/material";
-import React, { useId } from "react";
-import "./drop.css";
+import React, { useId, useState, useEffect } from "react";
 import "./navbar.css";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import { menu } from "../../database/local";
+import { v4 as uuidv4 } from "uuid";
 
-const Drop = (props) => {
+const Dropdown = ({ menu, color, bgcolor, mainMenu }) => {
+  const mediaMatch = window.matchMedia("(min-width: 768px)");
+  const [matches, setMatches] = useState(mediaMatch.matches);
+  useEffect(() => {
+    const handler = (e) => setMatches(e.matches);
+    mediaMatch.addEventListener("change", handler);
+    return () => mediaMatch.removeEventListener("cahgen", handler);
+  });
+
+  const styles = {
+    navmenu: (matches) => ({
+      flexGrow: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      display: !matches && mainMenu ? "none" : "flex",
+    }),
+  };
+
   return (
-    <div style={{ flexGrow: 1 }} className="navmenu">
+    <div style={styles.navmenu(matches)}>
       {menu.map((element, key) => (
-        <>
+        <React.Fragment key={uuidv4()}>
           <Menu
-            key={key}
+            key={uuidv4()}
             label={element.label}
             link={element.link}
             submenu={element.submenu}
+            color={color}
+            bgcolor={bgcolor}
           />
-          {menu.length > key + 1 && <p>●</p>}
-        </>
+          {menu.length > key + 1 && (
+            <p key={uuidv4()} style={{ color: "#8bc53d" }}>
+              •
+            </p>
+          )}
+        </React.Fragment>
       ))}
     </div>
   );
 };
 
-export default Drop;
+export default Dropdown;
 
-const Menu = ({ label, submenu, level, link }) => {
+Dropdown.propTypes = {
+  menu: PropTypes.array.isRequired,
+  bgcolor: PropTypes.string,
+  color: PropTypes.string,
+  mainMenu: PropTypes.bool,
+};
+
+Dropdown.defaultProps = {
+  mainMenu: false,
+};
+
+const Menu = ({ label, submenu, level, link, color, bgcolor }) => {
   const buttonId = useId();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -53,6 +86,7 @@ const Menu = ({ label, submenu, level, link }) => {
           className="navlink"
           onMouseEnter={handleEnterLevel2}
           onMouseLeave={handleCloseLevel2}
+          style={{ color: color, backgroundColor: bgcolor }}
         >
           {label}
           <Popper
@@ -76,7 +110,7 @@ const Menu = ({ label, submenu, level, link }) => {
                     <Menu
                       label={element.label}
                       submenu={element.submenu}
-                      key={key}
+                      key={uuidv4()}
                       level={level + 1}
                       link={element.link}
                     />
@@ -95,8 +129,12 @@ Menu.propTypes = {
   submenu: PropTypes.arrayOf(PropTypes.object),
   level: PropTypes.number,
   link: PropTypes.string,
+  bgcolor: PropTypes.string,
+  color: PropTypes.string,
 };
 
 Menu.defaultProps = {
   level: 0,
+  bgcolor: "transparent",
+  color: "#000",
 };

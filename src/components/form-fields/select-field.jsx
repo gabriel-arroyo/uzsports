@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 import MenuItem from "@mui/material/MenuItem";
 import { FormContext } from "../form-paper/form-paper.jsx";
+import { v4 as uuidv4 } from "uuid";
 
 const SelectField = (props) => {
   const form = useContext(FormContext);
@@ -28,7 +29,7 @@ const SelectField = (props) => {
     >
       <MenuItem value={props.default}>Selecciona {label}</MenuItem>
       {options.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
+        <MenuItem key={uuidv4()} value={option.value}>
           {option.label}
         </MenuItem>
       ))}
