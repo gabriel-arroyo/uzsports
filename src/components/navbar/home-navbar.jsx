@@ -22,7 +22,7 @@ const HomeNavbar = () => {
       alignItems: "center",
       padding: "0.5rem calc(2vw + ((100vw - 1200px) / 2)))",
       zIndex: 10,
-      margin: "0 auto",
+      margin: "0 10vw",
     }),
   };
 
