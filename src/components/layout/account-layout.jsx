@@ -6,7 +6,6 @@ const AccountLayout = () => {
     <div>
       <h1>AccountLayout</h1>
       <Outlet />
-      test
     </div>
   );
 };

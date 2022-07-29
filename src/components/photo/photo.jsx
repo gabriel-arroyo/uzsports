@@ -2,8 +2,25 @@ import { Box } from "@mui/material";
 import React from "react";
 import { PropTypes } from "prop-types";
 import { NavLink } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 
-const Photo = ({ src, to, round, lg }) => {
+const Img = styled("img")(({ theme, size }) => ({
+  padding: theme.spacing(1),
+  [theme.breakpoints.down("md")]: {
+    width: size === "large" ? "200px" : "140px",
+    heigth: size === "large" ? "200px" : "140px",
+  },
+  [theme.breakpoints.up("md")]: {
+    width: size === "large" ? "200px" : "140px",
+    heigth: size === "large" ? "200px" : "140px",
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: size === "large" ? "260px" : "160px",
+    heigth: size === "large" ? "260px" : "160px",
+  },
+}));
+
+const Photo = ({ src, to, round, lg, responsive }) => {
   return (
     <Box
       sx={{
@@ -13,11 +30,10 @@ const Photo = ({ src, to, round, lg }) => {
       }}
     >
       <NavLink to={to}>
-        <img
+        <Img
+          size={lg ? "large" : "small"}
           src={src}
           style={{
-            width: lg ? "260px" : "160px",
-            height: lg ? "260px" : "160px",
             objectFit: "fill",
             margin: "10px",
             borderRadius: round ? "50%" : "0",
@@ -35,6 +51,7 @@ Photo.propTypes = {
   to: PropTypes.string,
   round: PropTypes.bool,
   lg: PropTypes.bool,
+  responsive: PropTypes.bool,
 };
 
 Photo.defaultProps = {
@@ -42,4 +59,5 @@ Photo.defaultProps = {
   to: "/",
   round: false,
   lg: false,
+  responsive: false,
 };

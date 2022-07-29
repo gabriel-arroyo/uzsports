@@ -14,7 +14,7 @@ const Router = () => {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<Account />} />
+        <Route path="/" element={<></>} />
         <Route path="*" element={<></>} />
       </Routes>
       <Routes>

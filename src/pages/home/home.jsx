@@ -1,4 +1,5 @@
 import React from "react";
+import About from "../../components/about/about";
 import Gallery from "../../components/gallery/gallery";
 import HomeNavbar from "../../components/navbar/home-navbar";
 import NewsBar from "../../components/news/newsbar";
@@ -12,6 +13,7 @@ const Home = () => {
       <PhotoCarousel />
       <NewsBar />
       <Gallery />
+      <About />
     </>
   );
 };
