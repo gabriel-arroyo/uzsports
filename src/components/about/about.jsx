@@ -2,6 +2,7 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import Photo from "../photo/photo";
 import { styled } from "@mui/material/styles";
+import SocialBar from "../social/socialbar";
 
 const ResponsiveContainer = styled(Container)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -60,6 +61,7 @@ const About = () => {
               <Typography variant="body1">Zama</Typography>
             </Container>
           </ResponsiveContainer>
+          <SocialBar />
         </Grid>
       </Grid>
     </Box>
