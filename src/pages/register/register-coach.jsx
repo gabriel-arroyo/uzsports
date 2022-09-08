@@ -9,28 +9,70 @@ import SelectField from "../../components/form-fields/select-field";
 import FileField from "../../components/form-fields/file-field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../database/collections";
-import { auth } from "../../database/firebase-config";
-import { createUserWithEmailAndPassword } from "@firebase/auth";
+import usePersistentContext from "../../hooks/usePersistentContext";
+
+// Firebase
+import {
+  useFirestoreCollectionMutation,
+  useFirestoreDocumentMutation,
+  useFirestoreQuery,
+} from "@react-query-firebase/firestore";
+import { collection, doc, query, limit, where } from "firebase/firestore";
+import { firestore } from "../../database/firebase";
 
 const RegisterCoach = () => {
-  const register = new Collection("Coaches");
+  const [uid] = usePersistentContext("uid");
+
+  const [, setRoles] = usePersistentContext("roles");
+  // Coaches
+  const coachesCollection = collection(firestore, "Coaches");
+  const coachesMutation = useFirestoreCollectionMutation(coachesCollection);
+
+  // Users
+  const usersCollection = collection(firestore, "Users");
+  const refUsersQuery = query(
+    usersCollection,
+    limit(1),
+    where("uid", "==", uid)
+  );
+  const userQuery = useFirestoreQuery(["Users"], refUsersQuery, {
+    enabled: !!uid,
+  });
+
+  const snapshot = userQuery.data;
+  const document = snapshot.docs[0];
+  const docId = document.id;
+  const user = document.data();
+
+  const usersRef = doc(usersCollection, docId);
+  const userMutation = useFirestoreDocumentMutation(usersRef, {
+    merge: true,
+    enabled: !!docId,
+  });
+
   const form = useForm({
     defaultValues: {
-      user: "",
       team: "ND",
       experience: "",
       speciality: "",
+      photoUrl: "",
     },
   });
+
   const onSubmit = (data) => {
     console.log(data);
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((d) => {
-        console.log("logged", d);
-        register.insert({ ...data, uid: d.user.uid });
-      })
-      .catch((e) => console.log("error", e));
+    if (uid && docId) {
+      coachesMutation.mutate({
+        ...data,
+        uid: uid,
+        photoUrl: data.photoUrl[0]?.name ?? "",
+      });
+      const roles = new Set(user.roles);
+      roles.add("coach");
+      const newRoles = [...roles];
+      userMutation.mutate({ ...user, roles: newRoles });
+      setRoles(newRoles);
+    }
   };
 
   const teams = ["team 1", "team 2", "team3"];

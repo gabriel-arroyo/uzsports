@@ -1,5 +1,5 @@
 import { collection, doc, query as fbQuery } from "firebase/firestore";
-import { db } from "./firebase-config";
+import { firestore } from "./firebase";
 import {
   useFirestoreQueryData,
   useFirestoreDocument,
@@ -8,7 +8,7 @@ import {
 } from "@react-query-firebase/firestore";
 
 const firestoreQuery = (name, ...queryConstraints) =>
-  fbQuery(collection(db, name), ...queryConstraints);
+  fbQuery(collection(firestore, name), ...queryConstraints);
 
 /**
  * Template class for all firebase functions
@@ -19,19 +19,22 @@ export class Collection {
    */
   constructor(name) {
     this.name = name;
-    this.collection = collection(db, name);
+    this.collection = collection(firestore, name);
     this.mutation = this.mutater();
   }
 
   /**
    * Firebase Document
    * @param {string} id Firebase Document ID value
+   * @param {bool} depenency enables de query
    * @return {UseQueryResult<DocumentSnapshot<DocumentData>>}
    */
-  document(id) {
-    // const collectionRef = collection(db, this.name);
-    const ref = doc(this.collection, id);
-    const document = useFirestoreDocument([this.name, id], ref);
+  document(id, depenency = true) {
+    // const collectionRef = collection(firestore, this.name);
+    const ref = doc(this.collection);
+    const document = useFirestoreDocument([this.name, id], ref, {
+      enabled: depenency,
+    });
     return document;
   }
 
@@ -67,11 +70,14 @@ export class Collection {
 
   /**
    * Firebase Mutation
+   * @param {id} id id of the document to update
    * @param {bool} merge if the document is replaced or not
    * @return {UseMutationResult<DocumentReference<DocumentData>, FirestoreError, WithFieldValue<DocumentData>, unknown>}
    */
-  mutater(merge = true) {
-    return useFirestoreCollectionMutation(this.collection, { merge: merge });
+  mutater(id, merge = true) {
+    console.log(id);
+    const ref = doc(this.collection, id);
+    return useFirestoreCollectionMutation(ref, { merge: merge });
   }
 
   /**
@@ -81,7 +87,7 @@ export class Collection {
    */
   deleteMutation(id) {
     console.log(id);
-    const coll = collection(db, this.name);
+    const coll = collection(firestore, this.name);
     const ref = doc(coll, id);
     const mutation = useFirestoreDocumentDeletion(ref);
     return mutation;

@@ -8,7 +8,8 @@ import AccountLayout from "./components/layout/account-layout";
 import NotFoundPage from "./pages/404/404";
 import { HashRouter } from "react-router-dom";
 import Register from "./pages/register/register";
-import RegisterPlayer from "./pages/register/register-player";
+import Tester from "./pages/tester/tester";
+import Admin from "./pages/admin/admin";
 
 const Router = () => {
   return (
@@ -20,10 +21,11 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="tester" element={<Tester />} />
           <Route path="account" element={<AccountLayout />}>
             <Route index element={<Account />} />
             <Route path="register/*" element={<Register />} />
-            <Route path="register-player" element={<RegisterPlayer />} />
+            <Route path="admin/*" element={<Admin />} />
             <Route path="login" element={<Login />} />
           </Route>
         </Route>

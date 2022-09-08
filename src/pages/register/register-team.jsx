@@ -10,12 +10,47 @@ import FileField from "../../components/form-fields/file-field";
 import DateField from "../../components/form-fields/date-field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../database/collections";
-import { auth } from "../../database/firebase-config";
-import { createUserWithEmailAndPassword } from "@firebase/auth";
+import usePersistentContext from "../../hooks/usePersistentContext";
+
+// Firebase
+import {
+  useFirestoreCollectionMutation,
+  useFirestoreDocumentMutation,
+  useFirestoreQuery,
+} from "@react-query-firebase/firestore";
+import { collection, doc, query, limit, where } from "firebase/firestore";
+import { firestore } from "../../database/firebase";
 
 const RegisterTeam = () => {
-  const register = new Collection("Teams");
+  const [uid] = usePersistentContext("uid");
+
+  const [, setRoles] = usePersistentContext("roles");
+  // Teams
+  const teamsCollection = collection(firestore, "Teams");
+  const teamsMutation = useFirestoreCollectionMutation(teamsCollection);
+
+  // Users
+  const usersCollection = collection(firestore, "Users");
+  const refUsersQuery = query(
+    usersCollection,
+    limit(1),
+    where("uid", "==", uid)
+  );
+  const userQuery = useFirestoreQuery(["Users"], refUsersQuery, {
+    enabled: !!uid,
+  });
+
+  const snapshot = userQuery.data;
+  const document = snapshot.docs[0];
+  const docId = document.id;
+  const user = document.data();
+
+  const usersRef = doc(usersCollection, docId);
+  const userMutation = useFirestoreDocumentMutation(usersRef, {
+    merge: true,
+    enabled: !!docId,
+  });
+
   const form = useForm({
     defaultValues: {
       teamName: "",
@@ -24,21 +59,27 @@ const RegisterTeam = () => {
       category: "ND",
       birthday: "",
       city: "",
-      capitain: "",
       players: "ND",
-      email: "",
-      phone: "",
       social: "",
     },
   });
   const onSubmit = (data) => {
     console.log(data);
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((d) => {
-        console.log("logged", d);
-        register.insert({ ...data, uid: d.user.uid });
-      })
-      .catch((e) => console.log("error", e));
+    if (uid && docId) {
+      teamsMutation.mutate({
+        ...data,
+        uid: uid,
+        capitain: uid,
+        photoUrl: data.photoUrl[0]?.name ?? "",
+        logoUrl: data.logoUrl[0]?.name ?? "",
+      });
+      const roles = new Set(user.roles);
+      roles.add("capitain");
+      const newRoles = [...roles];
+      userMutation.mutate({ ...user, roles: newRoles });
+      setRoles(newRoles);
+      console.log(user);
+    }
   };
   const jugadores = [
     { value: 1, label: "jugador 1" },
@@ -81,9 +122,9 @@ const RegisterTeam = () => {
         </FormRow>
         <FormRow>
           <Field name={"city"} label={"Ciudad"} />
+          <Field name={"social"} label={"Facebook"} />
         </FormRow>
         <FormRow>
-          <Field name={"capitain"} label={"Email del capitán"} />
           <SelectField
             name={"players"}
             label={"Jugadores"}
@@ -91,13 +132,13 @@ const RegisterTeam = () => {
             default={"ND"}
           />
         </FormRow>
-        <FormRow>
-          <Field name={"email"} type={"email"} label={"Correo electrónico"} />
-          <Field name={"phone"} type={"phone"} label={"Teléfono"} />
-          <Field name={"social"} label={"Facebook"} />
-        </FormRow>
 
         <FormFooter>
+          <Typography variant="body2" color="text.secondary" align="center">
+            El usuario que realiza el registro será considerado como capitán del
+            equipo. Si desea nombrar un capitán diferente podrá hacerlo en la
+            página de administración de su equipo.
+          </Typography>
           <Button type="submit" variant="contained">
             Registrar
           </Button>

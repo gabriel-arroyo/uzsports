@@ -8,12 +8,46 @@ import Field from "../../components/form-fields/field";
 import SelectField from "../../components/form-fields/select-field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../database/collections";
-import { auth } from "../../database/firebase-config";
-import { createUserWithEmailAndPassword } from "@firebase/auth";
+import usePersistentContext from "../../hooks/usePersistentContext";
+
+// Firebase
+import {
+  useFirestoreCollectionMutation,
+  useFirestoreDocumentMutation,
+  useFirestoreQuery,
+} from "@react-query-firebase/firestore";
+import { collection, doc, query, limit, where } from "firebase/firestore";
+import { firestore } from "../../database/firebase";
 
 const RegisterPlayer = () => {
-  const register = new Collection("Players");
+  const [uid] = usePersistentContext("uid");
+  const [, setRoles] = usePersistentContext("roles");
+  // Players
+  const playersCollection = collection(firestore, "Players");
+  const playersMutation = useFirestoreCollectionMutation(playersCollection);
+
+  // Users
+  const usersCollection = collection(firestore, "Users");
+  const refUsersQuery = query(
+    usersCollection,
+    limit(1),
+    where("uid", "==", uid)
+  );
+  const userQuery = useFirestoreQuery(["Users"], refUsersQuery, {
+    enabled: !!uid,
+  });
+
+  const snapshot = userQuery.data;
+  const document = snapshot.docs[0];
+  const docId = document.id;
+  const user = document.data();
+
+  const usersRef = doc(usersCollection, docId);
+  const userMutation = useFirestoreDocumentMutation(usersRef, {
+    merge: true,
+    enabled: !!docId,
+  });
+
   const form = useForm({
     defaultValues: {
       number: 0,
@@ -23,12 +57,15 @@ const RegisterPlayer = () => {
   });
   const onSubmit = (data) => {
     console.log(data);
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((d) => {
-        console.log("logged", d);
-        register.insert({ ...data, uid: d.user.uid });
-      })
-      .catch((e) => console.log("error", e));
+    if (uid && docId) {
+      playersMutation.mutate({ ...data, uid: uid });
+      const roles = new Set(user.roles);
+      roles.add("player");
+      const newRoles = [...roles];
+      userMutation.mutate({ ...user, roles: newRoles });
+      setRoles(newRoles);
+      console.log(user);
+    }
   };
   const positions = [
     { value: 1, label: "1" },
@@ -39,6 +76,14 @@ const RegisterPlayer = () => {
   ];
   const teams = ["team 1", "team 2", "team3"];
 
+  if (playersMutation.isSuccess) {
+    return (
+      <div>
+        <Typography variant="h4">Jugador Registrado</Typography>
+        <Link to="/">Regresar</Link>
+      </div>
+    );
+  }
   return (
     <>
       <FormPaper

@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
 import { useForm } from "react-hook-form";
 import FormPaper from "../../components/form-paper/form-paper";
 import Typography from "@mui/material/Typography";
@@ -7,44 +8,59 @@ import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
 import FormFooter from "../../components/form-fields/form-footer";
 import FormRow from "../../components/form-fields/form-row";
-import { Collection } from "../../database/collections";
+import { useAuthSignInWithEmailAndPassword } from "@react-query-firebase/auth";
+import { auth } from "../../database/firebase";
+import usePersistentContext from "../../hooks/usePersistentContext";
+// import { useQueryClient } from "react-query";
 
 const Login = () => {
-  // const user = useAuthUser(["ing.gabriel.arroyo@gmail.com"], auth);
-  // console.log("user", user);
-  const login = new Collection("Login");
+  const [, setUID] = usePersistentContext("uid");
+  const [error, setError] = React.useState("");
+
+  // const queryClient = useQueryClient();
   const form = useForm({
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
   const onSubmit = (data) => {
     console.log(data);
-    login.insert(data);
+
+    mutation.mutate(data);
   };
-  console.log(login.mutation.isError);
 
-  // if (user.isLoading) {
-  //   return <div>Loading</div>;
-  // }
+  const mutation = useAuthSignInWithEmailAndPassword(auth, {
+    onSuccess(user) {
+      if (user) {
+        const uid = user.user.uid;
+        console.log("User is authenticated!", user);
+        setUID(uid);
+        console.log("uid:", uid);
+        // queryClient.invalidateQueries(["uid"]);
 
-  // if (user.data) {
-  //   return <div>Welcome {user.data.displayName}!</div>;
-  // }
-
-  // if (user.isError) {
-  //   return <div>Error</div>;
-  // }
-
-  if (login.isError) {
-    return <div>Error</div>;
-  }
+        setError("");
+      }
+    },
+    onError(error) {
+      console.log("Error signing in", error);
+      setError(
+        error.message.includes("wrong-password")
+          ? "Contrasena incorrecta"
+          : error.message
+      );
+      if (error.message.includes("wrong-password")) {
+        form.resetField("password");
+      } else {
+        form.reset();
+      }
+    },
+  });
 
   return (
     <FormPaper title={"Login"} handleSubmit={onSubmit} form={form}>
       <FormRow center={true}>
-        <Field name={"username"} label={"Usuario"} required={true} />
+        <Field name={"email"} label={"Email"} required={true} />
       </FormRow>
       <FormRow center={true}>
         <Field
@@ -55,9 +71,15 @@ const Login = () => {
         />
       </FormRow>
       <FormFooter>
+        {error && (
+          <Alert sx={{ mt: "20px" }} severity="error">
+            {error}
+          </Alert>
+        )}
         <Button type="submit" variant="contained">
           Login
         </Button>
+        {mutation.isError && <p>{mutation.error.message}</p>}
         <Typography mt={1} variant="body1">
           ¿No tienes cuenta?
           <Link to={"/account/register"}> Regístrate</Link>

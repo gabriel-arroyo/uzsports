@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 import { FormContext } from "../form-paper/form-paper.jsx";
 
-const Field = (props) => {
+const DateField2 = (props) => {
   const form = useContext(FormContext);
   const {
     register,
@@ -33,19 +33,15 @@ const Field = (props) => {
     : {};
 
   const pattern = isEmail ? emailPattern : isPhone ? phonePattern : null;
+
   return (
     <TextField
-      sx={{ width: "20rem" }}
-      value={props.value}
-      disabled={props.disabled}
-      variant={
-        props.standard ? "standard" : props.filled ? "filled" : "outlined"
-      }
+      variant="outlined"
       type={
         !(isPassword || isPasswordConfirm) ? props.type ?? "text" : "password"
       }
-      error={errors && errors[props.name] ? true : false}
       label={label}
+      error={errors && errors[props.name] ? true : false}
       helperText={
         errors && !errors[props.name]
           ? ""
@@ -65,23 +61,11 @@ const Field = (props) => {
   );
 };
 
-export default Field;
+export default DateField2;
 
-Field.propTypes = {
+DateField2.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   required: PropTypes.bool,
   type: PropTypes.string,
-  filled: PropTypes.bool,
-  standard: PropTypes.bool,
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-};
-
-Field.defaultProps = {
-  required: false,
-  type: "text",
-  filled: false,
-  standard: false,
-  disabled: false,
 };
