@@ -91,7 +91,7 @@ const RegisterPlayer = () => {
   if (teamsQuery.isLoading) {
     return <div>Loading teams...</div>;
   }
-  // const teams = [];
+  const teams = [];
   // teamsQuery.data.docs.map((docSnapshot) => {
   //   const data = docSnapshot.data();
   //   teams.push(data.teamName);
