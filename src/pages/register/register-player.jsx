@@ -92,12 +92,14 @@ const RegisterPlayer = () => {
     return <div>Loading teams...</div>;
   }
   const teams = [];
-  // teamsQuery.data.docs.map((docSnapshot) => {
-  //   const data = docSnapshot.data();
-  //   teams.push(data.teamName);
-  // });
+
   return (
     <>
+      {teamsQuery.data.docs.map((docSnapshot) => {
+        const data = docSnapshot.data();
+        // teams.push(data.teamName);
+        return <div key={docSnapshot.id}>{data.teamName}</div>;
+      })}
       <FormPaper
         title={"Registro de Jugador"}
         handleSubmit={onSubmit}
