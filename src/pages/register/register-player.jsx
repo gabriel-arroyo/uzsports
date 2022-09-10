@@ -26,6 +26,11 @@ const RegisterPlayer = () => {
   const playersCollection = collection(firestore, "Players");
   const playersMutation = useFirestoreCollectionMutation(playersCollection);
 
+  // Teams
+  const teamsCollection = collection(firestore, "Teams");
+  const teamsRef = query(teamsCollection);
+  const teamsQuery = useFirestoreQuery(["Teams"], teamsRef);
+
   // Users
   const usersCollection = collection(firestore, "Users");
   const refUsersQuery = query(
@@ -74,7 +79,6 @@ const RegisterPlayer = () => {
     { value: 4, label: "4" },
     { value: 5, label: "5" },
   ];
-  const teams = ["team 1", "team 2", "team3"];
 
   if (playersMutation.isSuccess) {
     return (
@@ -84,6 +88,14 @@ const RegisterPlayer = () => {
       </div>
     );
   }
+  if (teamsQuery.isLoading) {
+    return <div>Loading teams...</div>;
+  }
+  const teams = [];
+  teamsQuery.data.docs.map((docSnapshot) => {
+    const data = docSnapshot.data();
+    teams.push(data.teamName);
+  });
   return (
     <>
       <FormPaper

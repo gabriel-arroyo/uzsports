@@ -62,7 +62,8 @@ const RegisterUser = () => {
       social: "",
       password: "",
       passwordConfirm: "",
-      user: "", // ---------------agregar usuario y verificar que no exista  ----//
+      user: "",
+      test: "",
     },
   });
 
