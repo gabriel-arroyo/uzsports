@@ -91,11 +91,11 @@ const RegisterPlayer = () => {
   if (teamsQuery.isLoading) {
     return <div>Loading teams...</div>;
   }
-  const teams = [];
-  teamsQuery.data.docs.map((docSnapshot) => {
-    const data = docSnapshot.data();
-    teams.push(data.teamName);
-  });
+  // const teams = [];
+  // teamsQuery.data.docs.map((docSnapshot) => {
+  //   const data = docSnapshot.data();
+  //   teams.push(data.teamName);
+  // });
   return (
     <>
       <FormPaper
