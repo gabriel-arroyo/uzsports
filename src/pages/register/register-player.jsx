@@ -43,6 +43,9 @@ const RegisterPlayer = () => {
   });
 
   const snapshot = userQuery.data;
+  if (userQuery.error || snapshot.docs.length < 1) {
+    return <div>Por favor registrate primero o ingreas con tu usuario</div>;
+  }
   const document = snapshot.docs[0];
   const docId = document.id;
   const user = document.data();

@@ -1,68 +1,48 @@
+import { useAuthSignOut } from "@react-query-firebase/auth";
+import { auth } from "../../database/firebase";
 import React from "react";
 // import usePersistentContext from "../../hooks/usePersistentContext";
-import { collection, doc, query, limit, where } from "firebase/firestore";
-import {
-  useFirestoreDocumentMutation,
-  useFirestoreQuery,
-} from "@react-query-firebase/firestore";
-import { firestore } from "../../database/firebase";
-import PropTypes from "prop-types";
 
 const Tester = () => {
-  // const [uid2] = usePersistentContext("uid");
-  const uid = "0pP6nirR3UTCdk4p8hIqLLFjQfs2";
-  const fbcollection = collection(firestore, "Users");
-  const ref = doc(fbcollection, uid);
-  const mutation = useFirestoreDocumentMutation(ref, { merge: true });
+  const mutation = useAuthSignOut(auth, {
+    onSuccess(user) {
+      console.log("yeii");
+      console.log(user);
+      if (user) {
+        console.log("user logged out: ", user);
+      }
+    },
+  });
 
-  if (!uid) return <div>Loading...</div>;
+  if (mutation.isError) {
+    console.log("error");
+  }
 
+  if (mutation.isIdle) {
+    console.log("idle");
+  }
+
+  if (mutation.isLoading) {
+    console.log("loading");
+  }
+  if (mutation.isPaused) {
+    console.log("Paused");
+  }
+  if (mutation.isSuccess) {
+    console.log("success");
+  }
+
+  const onSubmit = () => {
+    console.log("test");
+    mutation.mutate();
+  };
   return (
     <>
-      <Fetcher uid={uid} />
-      <button
-        disabled={mutation.isLoading}
-        onClick={() => {
-          mutation.mutate({
-            name: "New product!1",
-            price: 20,
-          });
-        }}
-      >
-        Set document
-      </button>
+      <div>test</div>
+      <button onClick={onSubmit}>logout</button>
       {mutation.isError && <p>{mutation.error.message}</p>}
     </>
   );
 };
 
 export default Tester;
-
-const Fetcher = ({ uid }) => {
-  console.log("id", uid);
-  const ref = query(
-    collection(firestore, "Users"),
-    limit(1),
-    where("uid", "==", uid)
-  );
-
-  const data = useFirestoreQuery(["Users"], ref);
-
-  if (data.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  const snapshot = data.data;
-  const doc = snapshot.docs[0];
-  const user = doc.data();
-
-  return (
-    <div key={doc.id}>
-      {user.email} {doc.id}
-    </div>
-  );
-};
-
-Fetcher.propTypes = {
-  uid: PropTypes.string.isRequired,
-};

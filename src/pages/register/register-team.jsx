@@ -29,6 +29,12 @@ const RegisterTeam = () => {
   const teamsCollection = collection(firestore, "Teams");
   const teamsMutation = useFirestoreCollectionMutation(teamsCollection);
 
+  // Categories
+  const categoriesCollection = collection(firestore, "Categories");
+  const categoriesRef = query(categoriesCollection);
+  const categoriesQuery = useFirestoreQuery(["Categories"], categoriesRef);
+  // SubCategories
+
   // Users
   const usersCollection = collection(firestore, "Users");
   const refUsersQuery = query(
@@ -57,6 +63,8 @@ const RegisterTeam = () => {
       logoUrl: "",
       photoUrl: "",
       category: "ND",
+      subCategory: "ND",
+      age: "ND",
       birthday: "",
       city: "",
       players: "ND",
@@ -88,14 +96,19 @@ const RegisterTeam = () => {
     { value: 4, label: "jugador 4" },
     { value: 5, label: "jugador 5" },
   ];
-  const categories = [
-    { value: 1, label: "categoria 1" },
-    { value: 2, label: "categoria 2" },
-    { value: 3, label: "categoria 3" },
-  ];
+  const categories = [];
+  const subCategories = ["A", "B"];
+  const ages = ["98", "99", "00"];
 
+  if (categoriesQuery.isLoading) {
+    return <div>Loading categories...</div>;
+  }
   return (
     <>
+      {categoriesQuery.data.docs.map((docSnapshot) => {
+        const data = docSnapshot.data();
+        categories.push(data.name);
+      })}
       <FormPaper
         title={"Registro de Equipo"}
         handleSubmit={onSubmit}
@@ -113,9 +126,22 @@ const RegisterTeam = () => {
             options={categories}
             default={"ND"}
           />
+          <SelectField
+            name={"subCategory"}
+            label={"Sub Categoría"}
+            options={subCategories}
+            default={"ND"}
+          />
+          <SelectField
+            name={"age"}
+            label={"Rango de edades"}
+            options={ages}
+            default={"ND"}
+          />
+        </FormRow>
+        <FormRow>
           <DateField name={"birthday"} label={"Fecha de nacimiento"} />
         </FormRow>
-
         <FormRow center={true}>
           <FileField name={"logoUrl"} label={"Logo"} />
           <FileField name={"photoUrl"} label={"Foto"} />

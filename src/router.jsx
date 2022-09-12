@@ -10,6 +10,7 @@ import { HashRouter } from "react-router-dom";
 import Register from "./pages/register/register";
 import Tester from "./pages/tester/tester";
 import Admin from "./pages/admin/admin";
+import ToDo from "./pages/todo/todo";
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="todo" element={<ToDo />} />
           <Route path="tester" element={<Tester />} />
           <Route path="account" element={<AccountLayout />}>
             <Route index element={<Account />} />

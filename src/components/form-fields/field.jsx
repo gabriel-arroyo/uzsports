@@ -76,6 +76,7 @@ Field.propTypes = {
   standard: PropTypes.bool,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  shrink: PropTypes.bool,
 };
 
 Field.defaultProps = {

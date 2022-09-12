@@ -4,7 +4,15 @@ import Field from "./field";
 import FormRow from "./form-row";
 import PropTypes from "prop-types";
 
-const EditableField = ({ edit, name, label, value, type, handleSubmit }) => {
+const EditableField = ({
+  edit,
+  name,
+  label,
+  value,
+  type,
+  shrink,
+  handleSubmit,
+}) => {
   return (
     <FormRow>
       <Field
@@ -33,6 +41,7 @@ EditableField.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.object.isRequired,
   type: PropTypes.string,
+  shrink: PropTypes.bool,
   handleSubmit: PropTypes.func,
 };
 

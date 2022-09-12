@@ -85,6 +85,7 @@ const AdminUser = () => {
               label={"Fecha de nacimiento"}
               type="date"
               handleSubmit={onSubmit}
+              shrink={true}
             />
             <EditableField
               edit={edit}
