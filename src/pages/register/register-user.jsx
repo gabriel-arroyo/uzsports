@@ -6,6 +6,7 @@ import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Field from "../../components/form-fields/field";
+import SelectField from "../../components/form-fields/select-field";
 import FileField from "../../components/form-fields/file-field";
 import DateField from "../../components/form-fields/date-field";
 import FormFooter from "../../components/form-fields/form-footer";
@@ -26,19 +27,6 @@ import usePersistentContext from "../../hooks/usePersistentContext";
 
 import "./register.css";
 
-// crear tab de administracion de usuarios para root
-// dar permisos por ligas
-// niveles admin
-// general
-// torneo
-// arbitro -> score app
-// coach / capitán / admin de equipo
-
-// loggin facebook o gmail o microsoft
-
-// error cuando ya exista
-
-// detectar login
 const RegisterUser = () => {
   const ref = collection(firestore, "Users");
   const mutation = useFirestoreCollectionMutation(ref);
@@ -58,14 +46,20 @@ const RegisterUser = () => {
       photoUrl: "",
       birthday: "",
       email: "",
-      phone: "", // verificar que no exista
+      phone: "",
       social: "",
       password: "",
       passwordConfirm: "",
       user: "",
       test: "",
+      gender: "",
     },
   });
+
+  const genders = [
+    { label: "Hombre", value: "male" },
+    { label: "Mujer", value: "female" },
+  ];
 
   const signInWithFacebook = () => {
     signInWithPopup(auth, provider)
@@ -123,6 +117,12 @@ const RegisterUser = () => {
           <Field name={"firstName"} label={"Nombre"} required={true} />
           <Field name={"lastName"} label={"Apellido"} />
           <DateField name={"birthday"} label={"Fecha de nacimiento"} />
+          <SelectField
+            name={"gender"}
+            label={"Género"}
+            options={genders}
+            default={0}
+          />
         </FormRow>
         <FormRow center={true}>
           <FileField name={"photoUrl"} label={"Foto"} />

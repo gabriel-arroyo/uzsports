@@ -13,6 +13,9 @@ export default function usePersistentContext(key) {
   const { mutateAsync: setValue } = useMutation(
     (value) => localStorage.setItem(key, value),
     {
+      subscribe: true,
+    },
+    {
       onMutate: (mutatedData) => {
         const current = data;
         queryClient.setQueryData(key, mutatedData);
